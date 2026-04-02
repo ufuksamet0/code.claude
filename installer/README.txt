@@ -32,3 +32,13 @@ Bu repoda `.github/workflows/release.yml` tanımlıdır. Sizin yapmanız gereken
    (RELEASE_TAG=v0.2.0 gibi ortam değişkeni ile uyumlu tag kullanın.)
 
 “Could not fetch a valid release JSON”: İlk başarılı release ve `latest.json` varlığı oluşana kadar görülebilir; yukarıdaki adımlar tamamlanınca düzelir.
+
+--- Hızlı düzeltme (release var ama latest.json yok) ---
+1) Bu makinede imzalı derleme yapılmış olmalı (TAURI_SIGNING_PRIVATE_KEY ile `npm run tauri build`).
+2) RELEASE_TAG mevcut GitHub etiketiyle aynı olmalı (ör. v0.2.0):
+   RELEASE_TAG=v0.2.0 node scripts/generate-latest-json.mjs
+3) GitHub CLI ile yükle:
+   bash scripts/gh-upload-latest-json.sh v0.2.0
+   (Önce: `gh auth login` — repo yazma izni.)
+
+En son release’te `latest.json` varlığı göründükten sonra uygulama içi denetleme çalışır.

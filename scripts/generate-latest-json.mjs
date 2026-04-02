@@ -38,6 +38,10 @@ function platformKeyFromPath(filePath) {
   if (n.includes("x86_64-pc-windows-msvc")) return "windows-x86_64";
   if (n.includes("x86_64-unknown-linux-gnu")) return "linux-x86_64";
   if (n.includes("aarch64-unknown-linux-gnu")) return "linux-aarch64";
+  // Yerel `tauri build` (hedef klasörü olmadan): .../bundle/macos/*.app.tar.gz.sig
+  if (n.includes("/bundle/macos/") && /\.app\.tar\.gz\.sig$/i.test(n)) {
+    return "darwin-aarch64";
+  }
   return null;
 }
 

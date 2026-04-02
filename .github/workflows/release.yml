@@ -50,17 +50,27 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
           RELEASE_TAG: ${{ github.ref_name }}
 
-      - name: Upload GitHub Release
+      - name: Doğrula latest.json
+        run: |
+          test -f updater/latest.json
+          jq -e '.version and .platforms["darwin-aarch64"]' updater/latest.json
+
+      - name: GitHub Release (DMG ve paketler)
         uses: softprops/action-gh-release@v2
         with:
           fail_on_unmatched_files: false
           name: MultiMod AI ${{ github.ref_name }}
           body: |
             Otomatik derleme (GitHub Actions).
-            Güncelleme uç noktası: `.../releases/latest/download/latest.json`
+            Güncelleme: `releases/latest/download/latest.json`
           files: |
-            updater/latest.json
             src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/*
             src-tauri/target/aarch64-apple-darwin/release/bundle/macos/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Varlık adı tam "latest.json" olmalı; gh ile ayrı yükleme en güvenilir yol.
+      - name: latest.json varlığını yükle (updater uç noktası)
+        run: gh release upload "${{ github.ref_name }}" updater/latest.json --clobber
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
