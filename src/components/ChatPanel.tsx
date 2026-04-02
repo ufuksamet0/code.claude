@@ -4,6 +4,7 @@ import { buildSystemPrompt } from "../lib/prompts";
 import { buildMemoryContext } from "../lib/memory";
 import type { AppMode, ProviderId } from "../lib/types";
 import { useWorkspace } from "../lib/store";
+import { ModelPicker } from "./ModelPicker";
 import { runAiChatStream } from "../lib/useAiStream";
 
 type Props = {
@@ -94,9 +95,9 @@ export function ChatPanel({ mode, title, subtitle }: Props) {
         <p className="mt-2 text-[11px] leading-snug text-[var(--mm-chat-muted)]">
           Bu modda ana etkileşim burada — Cursor’daki gibi komut ve planları yazın.
         </p>
-        <div className="mt-3 flex flex-wrap gap-2">
+        <div className="mt-3 flex min-w-0 flex-col gap-2 sm:flex-row sm:flex-wrap">
           <select
-            className="mm-focus max-w-full rounded-[var(--mm-radius-sm)] border px-2 py-1.5 text-[12px] text-[var(--mm-chat-text)]"
+            className="mm-focus w-full shrink-0 rounded-[var(--mm-radius-sm)] border px-2 py-1.5 text-[12px] text-[var(--mm-chat-text)] sm:min-w-[140px] sm:max-w-[46%]"
             style={{
               borderColor: "var(--mm-chat-border)",
               background: "var(--mm-chat-input-bg)",
@@ -122,15 +123,11 @@ export function ChatPanel({ mode, title, subtitle }: Props) {
               <option value="perplexity">Perplexity</option>
             </optgroup>
           </select>
-          <input
-            className="mm-focus min-w-[120px] flex-1 rounded-[var(--mm-radius-sm)] border px-2 py-1.5 text-[13px] text-[var(--mm-chat-text)]"
-            style={{
-              borderColor: "var(--mm-chat-border)",
-              background: "var(--mm-chat-input-bg)",
-            }}
-            placeholder="Model adı"
+          <ModelPicker
+            provider={provider}
             value={model}
-            onChange={(e) => setModel(mode, e.target.value)}
+            onChange={(m) => setModel(mode, m)}
+            disabled={busy}
           />
         </div>
         <button

@@ -1,21 +1,6 @@
 import { create } from "zustand";
+import { DEFAULT_MODEL_BY_PROVIDER } from "./providerModels";
 import type { AppMode, ChatMessage, ProviderId } from "./types";
-
-const defaultModels: Record<ProviderId, string> = {
-  openai: "gpt-4o-mini",
-  anthropic: "claude-3-5-sonnet-20241022",
-  ollama: "llama3.2",
-  google: "gemini-2.0-flash",
-  groq: "llama-3.3-70b-versatile",
-  mistral: "mistral-small-latest",
-  openrouter: "openai/gpt-4o-mini",
-  together: "meta-llama/Llama-3.3-70B-Instruct-Turbo",
-  xai: "grok-2-latest",
-  deepseek: "deepseek-chat",
-  perplexity: "sonar",
-  llama: "meta-llama/Llama-3.3-70B-Instruct-Turbo",
-  qwen: "qwen-turbo",
-};
 
 function emptyChat(): ChatMessage[] {
   return [];
@@ -50,7 +35,7 @@ const initialProvider = Object.fromEntries(
 ) as Record<AppMode, ProviderId>;
 
 const initialModel = Object.fromEntries(
-  modes.map((m) => [m, defaultModels.openai]),
+  modes.map((m) => [m, DEFAULT_MODEL_BY_PROVIDER.openai]),
 ) as Record<AppMode, string>;
 
 export const useWorkspace = create<WorkspaceState>((set) => ({
@@ -83,7 +68,7 @@ export const useWorkspace = create<WorkspaceState>((set) => ({
   setProvider: (mode, p) =>
     set((s) => ({
       provider: { ...s.provider, [mode]: p },
-      model: { ...s.model, [mode]: defaultModels[p] },
+      model: { ...s.model, [mode]: DEFAULT_MODEL_BY_PROVIDER[p] },
     })),
   setModel: (mode, m) =>
     set((s) => ({
