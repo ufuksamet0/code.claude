@@ -29,3 +29,6 @@ src-tauri/updater.key
 # Rust / Tauri derleme çıktısı
 src-tauri/target
 src-tauri/gen
+
+# Yerel kurulum diskleri (büyük dosya)
+installer/*.dmg

@@ -11,12 +11,19 @@ npm install
 npm run tauri dev
 ```
 
-## Üretim derlemesi
+## Üretim derlemesi (macOS installer + imza)
+
+Özel imza anahtarı `src-tauri/updater.key` dosyasında olmalı (repoda yok; yerelde üretin).
 
 ```bash
-export TAURI_SIGNING_PRIVATE_KEY_PATH="./src-tauri/updater.key"
-env -u CI npm run tauri build
+export TAURI_SIGNING_PRIVATE_KEY="$(cat src-tauri/updater.key)"
+export TAURI_SIGNING_PRIVATE_KEY_PASSWORD=""
+npm run build:release
 ```
+
+Çıktı: `src-tauri/target/release/bundle/dmg/*.dmg`, güncelleme için `*.app.tar.gz` + `.sig`, ayrıca kopya: `installer/MultiMod-AI-<sürüm>-macOS-arm64.dmg`.
+
+Tek komut yerine doğrudan: `env -u CI npm run tauri build` (aynı `export` satırlarıyla).
 
 ## Git
 
