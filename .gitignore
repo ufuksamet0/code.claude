@@ -32,3 +32,6 @@ src-tauri/gen
 
 # Yerel kurulum diskleri (büyük dosya)
 installer/*.dmg
+
+# generate-latest-json.mjs çıktısı (CI’da üretilir; yerel denemede oluşursa commitlenmez)
+updater/latest.json

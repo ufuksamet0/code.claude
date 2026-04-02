@@ -3,7 +3,11 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import type { AppSettings } from "../lib/settings";
 import { loadSettings, saveSettings } from "../lib/settings";
-import { fetchAvailableUpdate, installUpdate } from "../lib/updater";
+import {
+  fetchAvailableUpdate,
+  formatUpdateError,
+  installUpdate,
+} from "../lib/updater";
 
 export function SettingsPage() {
   const [s, setS] = useState<AppSettings>({});
@@ -51,9 +55,7 @@ export function SettingsPage() {
         }
       });
     } catch (e) {
-      setUpdateMsg(
-        `Güncelleme hatası: ${e instanceof Error ? e.message : String(e)}. Endpoint ve imza anahtarını kontrol edin (tauri.conf.json).`,
-      );
+      setUpdateMsg(formatUpdateError(e));
     } finally {
       setUpdateBusy(false);
     }
@@ -95,7 +97,9 @@ export function SettingsPage() {
           {updateBusy ? "Kontrol ediliyor…" : "Güncellemeyi şimdi denetle"}
         </button>
         {updateMsg ? (
-          <p className="text-[13px] text-[var(--mm-muted)]">{updateMsg}</p>
+          <p className="whitespace-pre-line text-[13px] leading-relaxed text-[var(--mm-muted)]">
+            {updateMsg}
+          </p>
         ) : null}
         {updateProgress ? (
           <p className="text-[12px] font-mono text-[var(--mm-muted)]">{updateProgress}</p>
@@ -115,7 +119,7 @@ export function SettingsPage() {
           />
         </label>
         <label className="block text-[13px] font-medium text-[var(--mm-text)]">
-          Anthropic API anahtarı
+          Claude (Anthropic) API anahtarı
           <input
             type="password"
             className="mm-focus mt-1 w-full rounded-[var(--mm-radius-sm)] border border-[var(--mm-border)] bg-[var(--mm-surface-solid)] px-3 py-2 text-[14px]"
@@ -130,6 +134,96 @@ export function SettingsPage() {
             className="mm-focus mt-1 w-full rounded-[var(--mm-radius-sm)] border border-[var(--mm-border)] bg-[var(--mm-surface-solid)] px-3 py-2 font-mono text-[14px]"
             value={s.ollamaBaseUrl ?? "http://127.0.0.1:11434"}
             onChange={(e) => setS({ ...s, ollamaBaseUrl: e.target.value })}
+          />
+        </label>
+        <label className="block text-[13px] font-medium text-[var(--mm-text)]">
+          Google AI (Gemini) API anahtarı
+          <input
+            type="password"
+            className="mm-focus mt-1 w-full rounded-[var(--mm-radius-sm)] border border-[var(--mm-border)] bg-[var(--mm-surface-solid)] px-3 py-2 text-[14px]"
+            value={s.googleApiKey ?? ""}
+            onChange={(e) => setS({ ...s, googleApiKey: e.target.value || undefined })}
+            autoComplete="off"
+          />
+        </label>
+        <label className="block text-[13px] font-medium text-[var(--mm-text)]">
+          Groq API anahtarı
+          <input
+            type="password"
+            className="mm-focus mt-1 w-full rounded-[var(--mm-radius-sm)] border border-[var(--mm-border)] bg-[var(--mm-surface-solid)] px-3 py-2 text-[14px]"
+            value={s.groqApiKey ?? ""}
+            onChange={(e) => setS({ ...s, groqApiKey: e.target.value || undefined })}
+            autoComplete="off"
+          />
+        </label>
+        <label className="block text-[13px] font-medium text-[var(--mm-text)]">
+          Mistral API anahtarı
+          <input
+            type="password"
+            className="mm-focus mt-1 w-full rounded-[var(--mm-radius-sm)] border border-[var(--mm-border)] bg-[var(--mm-surface-solid)] px-3 py-2 text-[14px]"
+            value={s.mistralApiKey ?? ""}
+            onChange={(e) => setS({ ...s, mistralApiKey: e.target.value || undefined })}
+            autoComplete="off"
+          />
+        </label>
+        <label className="block text-[13px] font-medium text-[var(--mm-text)]">
+          OpenRouter API anahtarı
+          <input
+            type="password"
+            className="mm-focus mt-1 w-full rounded-[var(--mm-radius-sm)] border border-[var(--mm-border)] bg-[var(--mm-surface-solid)] px-3 py-2 text-[14px]"
+            value={s.openrouterApiKey ?? ""}
+            onChange={(e) => setS({ ...s, openrouterApiKey: e.target.value || undefined })}
+            autoComplete="off"
+          />
+        </label>
+        <label className="block text-[13px] font-medium text-[var(--mm-text)]">
+          Together AI API anahtarı (Llama modu ile paylaşılır)
+          <input
+            type="password"
+            className="mm-focus mt-1 w-full rounded-[var(--mm-radius-sm)] border border-[var(--mm-border)] bg-[var(--mm-surface-solid)] px-3 py-2 text-[14px]"
+            value={s.togetherApiKey ?? ""}
+            onChange={(e) => setS({ ...s, togetherApiKey: e.target.value || undefined })}
+            autoComplete="off"
+          />
+        </label>
+        <label className="block text-[13px] font-medium text-[var(--mm-text)]">
+          Qwen (Alibaba DashScope) API anahtarı
+          <input
+            type="password"
+            className="mm-focus mt-1 w-full rounded-[var(--mm-radius-sm)] border border-[var(--mm-border)] bg-[var(--mm-surface-solid)] px-3 py-2 text-[14px]"
+            value={s.qwenApiKey ?? ""}
+            onChange={(e) => setS({ ...s, qwenApiKey: e.target.value || undefined })}
+            autoComplete="off"
+          />
+        </label>
+        <label className="block text-[13px] font-medium text-[var(--mm-text)]">
+          xAI API anahtarı
+          <input
+            type="password"
+            className="mm-focus mt-1 w-full rounded-[var(--mm-radius-sm)] border border-[var(--mm-border)] bg-[var(--mm-surface-solid)] px-3 py-2 text-[14px]"
+            value={s.xaiApiKey ?? ""}
+            onChange={(e) => setS({ ...s, xaiApiKey: e.target.value || undefined })}
+            autoComplete="off"
+          />
+        </label>
+        <label className="block text-[13px] font-medium text-[var(--mm-text)]">
+          DeepSeek API anahtarı
+          <input
+            type="password"
+            className="mm-focus mt-1 w-full rounded-[var(--mm-radius-sm)] border border-[var(--mm-border)] bg-[var(--mm-surface-solid)] px-3 py-2 text-[14px]"
+            value={s.deepseekApiKey ?? ""}
+            onChange={(e) => setS({ ...s, deepseekApiKey: e.target.value || undefined })}
+            autoComplete="off"
+          />
+        </label>
+        <label className="block text-[13px] font-medium text-[var(--mm-text)]">
+          Perplexity API anahtarı
+          <input
+            type="password"
+            className="mm-focus mt-1 w-full rounded-[var(--mm-radius-sm)] border border-[var(--mm-border)] bg-[var(--mm-surface-solid)] px-3 py-2 text-[14px]"
+            value={s.perplexityApiKey ?? ""}
+            onChange={(e) => setS({ ...s, perplexityApiKey: e.target.value || undefined })}
+            autoComplete="off"
           />
         </label>
         <button

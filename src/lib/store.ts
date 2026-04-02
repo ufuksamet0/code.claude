@@ -5,6 +5,16 @@ const defaultModels: Record<ProviderId, string> = {
   openai: "gpt-4o-mini",
   anthropic: "claude-3-5-sonnet-20241022",
   ollama: "llama3.2",
+  google: "gemini-2.0-flash",
+  groq: "llama-3.3-70b-versatile",
+  mistral: "mistral-small-latest",
+  openrouter: "openai/gpt-4o-mini",
+  together: "meta-llama/Llama-3.3-70B-Instruct-Turbo",
+  xai: "grok-2-latest",
+  deepseek: "deepseek-chat",
+  perplexity: "sonar",
+  llama: "meta-llama/Llama-3.3-70B-Instruct-Turbo",
+  qwen: "qwen-turbo",
 };
 
 function emptyChat(): ChatMessage[] {

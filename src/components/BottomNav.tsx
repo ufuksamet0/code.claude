@@ -12,8 +12,7 @@ const items = [
 export function BottomNav() {
   return (
     <nav
-      className="mm-glass flex shrink-0 items-center justify-between gap-1 border-t px-3 py-2"
-      style={{ borderColor: "var(--mm-border)" }}
+      className="mm-bottom-nav flex shrink-0 items-center justify-between gap-1 border-t px-3 py-2 backdrop-blur-md"
       aria-label="AI modları"
     >
       <div className="flex flex-1 flex-wrap items-center justify-center gap-1 sm:gap-2">

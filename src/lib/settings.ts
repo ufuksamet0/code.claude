@@ -4,6 +4,15 @@ export type AppSettings = {
   openaiApiKey?: string;
   anthropicApiKey?: string;
   ollamaBaseUrl?: string;
+  googleApiKey?: string;
+  groqApiKey?: string;
+  mistralApiKey?: string;
+  openrouterApiKey?: string;
+  togetherApiKey?: string;
+  xaiApiKey?: string;
+  deepseekApiKey?: string;
+  perplexityApiKey?: string;
+  qwenApiKey?: string;
   defaultProvider?: string;
   defaultModelOpenai?: string;
   defaultModelAnthropic?: string;

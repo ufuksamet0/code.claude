@@ -80,32 +80,54 @@ export function ChatPanel({ mode, title, subtitle }: Props) {
   ]);
 
   return (
-    <aside
-      className="mm-glass flex min-h-0 w-[min(100%,380px)] shrink-0 flex-col border-r md:w-[380px]"
-      style={{ borderColor: "var(--mm-border)" }}
-    >
-      <header className="border-b px-4 py-3" style={{ borderColor: "var(--mm-border)" }}>
-        <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--mm-muted)]">
-          AI sohbet
+    <aside className="mm-chat-panel flex min-h-0 w-[min(100%,380px)] shrink-0 flex-col border-r md:w-[380px]">
+      <header className="mm-chat-panel-header border-b px-4 py-3">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--mm-chat-muted)]">
+          Asistan
         </p>
-        <h2 className="text-[17px] font-semibold leading-snug text-[var(--mm-text)]">
+        <h2 className="text-[17px] font-semibold leading-snug text-[var(--mm-chat-text)]">
           {title}
         </h2>
         {subtitle ? (
-          <p className="mt-0.5 text-[13px] text-[var(--mm-muted)]">{subtitle}</p>
+          <p className="mt-0.5 text-[13px] text-[var(--mm-chat-muted)]">{subtitle}</p>
         ) : null}
+        <p className="mt-2 text-[11px] leading-snug text-[var(--mm-chat-muted)]">
+          Bu modda ana etkileşim burada — Cursor’daki gibi komut ve planları yazın.
+        </p>
         <div className="mt-3 flex flex-wrap gap-2">
           <select
-            className="mm-focus rounded-[var(--mm-radius-sm)] border border-[var(--mm-border)] bg-[var(--mm-surface-solid)] px-2 py-1.5 text-[13px] text-[var(--mm-text)]"
+            className="mm-focus max-w-full rounded-[var(--mm-radius-sm)] border px-2 py-1.5 text-[12px] text-[var(--mm-chat-text)]"
+            style={{
+              borderColor: "var(--mm-chat-border)",
+              background: "var(--mm-chat-input-bg)",
+            }}
             value={provider}
             onChange={(e) => setProvider(mode, e.target.value as ProviderId)}
           >
-            <option value="openai">OpenAI</option>
-            <option value="anthropic">Anthropic</option>
-            <option value="ollama">Ollama</option>
+            <optgroup label="Önerilen">
+              <option value="openai">OpenAI</option>
+              <option value="anthropic">Claude</option>
+              <option value="google">Gemini</option>
+              <option value="xai">Grok</option>
+              <option value="llama">Llama</option>
+              <option value="qwen">Qwen</option>
+              <option value="mistral">Mistral</option>
+              <option value="openrouter">OpenRouter</option>
+              <option value="ollama">Ollama (yerel)</option>
+            </optgroup>
+            <optgroup label="Diğer">
+              <option value="groq">Groq</option>
+              <option value="together">Together</option>
+              <option value="deepseek">DeepSeek</option>
+              <option value="perplexity">Perplexity</option>
+            </optgroup>
           </select>
           <input
-            className="mm-focus min-w-[120px] flex-1 rounded-[var(--mm-radius-sm)] border border-[var(--mm-border)] bg-[var(--mm-surface-solid)] px-2 py-1.5 text-[13px] text-[var(--mm-text)]"
+            className="mm-focus min-w-[120px] flex-1 rounded-[var(--mm-radius-sm)] border px-2 py-1.5 text-[13px] text-[var(--mm-chat-text)]"
+            style={{
+              borderColor: "var(--mm-chat-border)",
+              background: "var(--mm-chat-input-bg)",
+            }}
             placeholder="Model adı"
             value={model}
             onChange={(e) => setModel(mode, e.target.value)}
@@ -113,7 +135,7 @@ export function ChatPanel({ mode, title, subtitle }: Props) {
         </div>
         <button
           type="button"
-          className="mm-focus mt-2 text-[12px] text-[var(--mm-accent)] underline-offset-2 hover:underline"
+          className="mm-focus mt-2 text-[12px] text-[var(--mm-chat-accent)] underline-offset-2 hover:underline"
           onClick={async () => {
             try {
               const ctx = await buildMemoryContext(mode, 2000);
@@ -126,29 +148,26 @@ export function ChatPanel({ mode, title, subtitle }: Props) {
           Hafıza önizlemesi
         </button>
         {memoryHint ? (
-          <pre className="mt-2 max-h-24 overflow-auto rounded-[var(--mm-radius-sm)] bg-[var(--mm-chat)] p-2 text-[11px] text-[var(--mm-muted)]">
+          <pre className="mt-2 max-h-24 overflow-auto rounded-[var(--mm-radius-sm)] p-2 text-[11px] text-[var(--mm-chat-muted)] mm-chat-memory-preview">
             {memoryHint}
           </pre>
         ) : null}
         <Link
           to="/settings"
-          className="mt-2 inline-block text-[12px] text-[var(--mm-muted)] hover:text-[var(--mm-accent)]"
+          className="mt-2 inline-block text-[12px] text-[var(--mm-chat-muted)] hover:text-[var(--mm-chat-accent)]"
         >
           API anahtarları →
         </Link>
       </header>
 
-      <div
-        className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto px-3 py-3"
-        style={{ background: "var(--mm-chat)" }}
-      >
+      <div className="mm-chat-scroll flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto px-3 py-3">
         {chats.map((m, i) => (
           <div
             key={`${i}-${m.role}`}
             className={
               m.role === "user"
-                ? "ml-4 rounded-[var(--mm-radius-sm)] bg-[var(--mm-accent-soft)] px-3 py-2 text-[13px] leading-relaxed text-[var(--mm-text)]"
-                : "mr-2 rounded-[var(--mm-radius-sm)] border border-[var(--mm-border)] bg-[var(--mm-surface-solid)] px-3 py-2 text-[13px] leading-relaxed text-[var(--mm-text)]"
+                ? "mm-chat-bubble-user ml-4 rounded-[var(--mm-radius-sm)] px-3 py-2 text-[13px] leading-relaxed"
+                : "mm-chat-bubble-assistant mr-2 rounded-[var(--mm-radius-sm)] border px-3 py-2 text-[13px] leading-relaxed"
             }
           >
             {m.content || (m.role === "assistant" && busy ? "…" : "\u00a0")}
@@ -156,9 +175,14 @@ export function ChatPanel({ mode, title, subtitle }: Props) {
         ))}
       </div>
 
-      <div className="border-t p-3" style={{ borderColor: "var(--mm-border)" }}>
+      <div className="mm-chat-panel-footer border-t p-3">
         <textarea
-          className="mm-focus mb-2 min-h-[72px] w-full resize-none rounded-[var(--mm-radius-sm)] border border-[var(--mm-border)] bg-[var(--mm-surface-solid)] px-3 py-2 text-[13px] text-[var(--mm-text)] placeholder:text-[var(--mm-muted)]"
+          className="mm-focus mb-2 min-h-[72px] w-full resize-none rounded-[var(--mm-radius-sm)] border px-3 py-2 text-[13px] placeholder:text-[var(--mm-chat-muted)]"
+          style={{
+            borderColor: "var(--mm-chat-border)",
+            background: "var(--mm-chat-input-bg)",
+            color: "var(--mm-chat-text)",
+          }}
           placeholder="Mesajınızı yazın…"
           value={input}
           disabled={busy}
@@ -172,7 +196,7 @@ export function ChatPanel({ mode, title, subtitle }: Props) {
         />
         <button
           type="button"
-          className="mm-focus mm-pill w-full bg-[var(--mm-accent)] py-2.5 text-[14px] font-semibold text-white disabled:opacity-50"
+          className="mm-focus mm-pill mm-chat-send w-full py-2.5 text-[14px] font-semibold disabled:opacity-50"
           disabled={busy || !input.trim()}
           onClick={() => void send()}
         >

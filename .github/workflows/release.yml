@@ -1,0 +1,66 @@
+# Tetikleme: git tag v0.2.1 && git push origin v0.2.1
+# Repo → Settings → Secrets: TAURI_SIGNING_PRIVATE_KEY (minisign özel anahtar, tek satır)
+# İsteğe bağlı: TAURI_SIGNING_PRIVATE_KEY_PASSWORD
+# Repo → Settings → Actions → General → Workflow permissions: Read and write
+
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build-macos:
+    runs-on: macos-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-darwin
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri -> target
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Tauri (macOS arm64, imzalı updater)
+        run: npm run tauri build -- --target aarch64-apple-darwin
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+
+      - name: Generate latest.json
+        run: node scripts/generate-latest-json.mjs
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+
+      - name: Upload GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          fail_on_unmatched_files: false
+          name: MultiMod AI ${{ github.ref_name }}
+          body: |
+            Otomatik derleme (GitHub Actions).
+            Güncelleme uç noktası: `.../releases/latest/download/latest.json`
+          files: |
+            updater/latest.json
+            src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/*
+            src-tauri/target/aarch64-apple-darwin/release/bundle/macos/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

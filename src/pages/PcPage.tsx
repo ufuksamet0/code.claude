@@ -35,53 +35,62 @@ export function PcPage() {
   }
 
   return (
-    <div className="p-6 md:p-8">
-      <header className="mb-6">
-        <h1 className="text-[28px] font-semibold tracking-tight text-[var(--mm-text)]">PC</h1>
-        <p className="mt-1 max-w-2xl text-[15px] leading-relaxed text-[var(--mm-muted)]">
-          Terminal komutları; çalışma dizini seçilmezse kullanıcı ana dizini kullanılır.
-        </p>
+    <div className="flex h-full min-h-0 flex-col overflow-hidden bg-[var(--mm-ws-bg)] text-[var(--mm-ws-fg)]">
+      <header
+        className="flex h-10 shrink-0 items-center justify-between border-b px-3 text-[12px]"
+        style={{ borderColor: "var(--mm-chat-border)", background: "#141414" }}
+      >
+        <span className="font-mono font-semibold text-[#e0e0e0]">Konsol</span>
+        <div className="flex items-center gap-2 text-[11px] text-[#6e6e6e]">
+          <span className="hidden sm:inline">bash — PC modu</span>
+        </div>
       </header>
 
-      <div className="mb-4 flex flex-wrap gap-2">
+      <div
+        className="flex shrink-0 flex-wrap items-center gap-2 border-b px-3 py-2"
+        style={{ borderColor: "var(--mm-chat-border)", background: "#1a1a1a" }}
+      >
         <button
           type="button"
-          className="mm-focus mm-pill bg-[var(--mm-accent)] px-4 py-2 text-[13px] font-medium text-white"
+          className="rounded border border-[#3ecf8e]/40 bg-[#1e1e1e] px-3 py-1.5 text-[12px] font-medium text-[#3ecf8e] hover:bg-[#252525]"
           onClick={() => void pickCwd()}
         >
           Çalışma klasörü
         </button>
         <button
           type="button"
-          className="mm-focus mm-pill border border-[var(--mm-border)] px-4 py-2 text-[13px]"
+          className="rounded border border-[#444] px-3 py-1.5 text-[12px] text-[#b0b0b0] hover:bg-[#252525]"
           onClick={() => void clearCwd()}
         >
-          Sıfırla (home)
+          Home’a sıfırla
         </button>
-        {cwd ? (
-          <span className="text-[13px] text-[var(--mm-muted)]">{cwd}</span>
-        ) : (
-          <span className="text-[13px] text-[var(--mm-muted)]">Varsayılan: kullanıcı ana dizini</span>
-        )}
+        <span className="line-clamp-2 flex-1 font-mono text-[11px] text-[#6e6e6e]">
+          {cwd ?? "Varsayılan: kullanıcı ana dizini"}
+        </span>
       </div>
 
-      <div className="mm-glass rounded-[var(--mm-radius)] p-4">
+      <div className="flex min-h-0 flex-1 flex-col p-2">
         <div className="flex gap-2">
+          <span className="pt-2 font-mono text-[12px] text-[#3ecf8e]">$</span>
           <input
-            className="mm-focus flex-1 rounded-[var(--mm-radius-sm)] border border-[var(--mm-border)] bg-[var(--mm-surface-solid)] px-3 py-2 font-mono text-[13px]"
+            className="mm-focus flex-1 rounded border border-[#333] bg-[#0c0c0c] px-3 py-2 font-mono text-[13px] text-[#00ff9d] placeholder:text-[#3d5d52]"
             value={cmd}
             onChange={(e) => setCmd(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") void run();
+            }}
+            placeholder="Komut"
           />
           <button
             type="button"
-            className="mm-focus mm-pill bg-[var(--mm-accent)] px-4 py-2 text-[13px] font-semibold text-white"
+            className="rounded bg-[#3ecf8e] px-5 py-2 text-[13px] font-semibold text-[#0c0c0c] hover:brightness-110"
             onClick={() => void run()}
           >
-            Çalıştır
+            Enter
           </button>
         </div>
-        <pre className="mt-4 max-h-[min(50vh,400px)] overflow-auto rounded-[var(--mm-radius-sm)] bg-[var(--mm-chat)] p-3 font-mono text-[11px] text-[var(--mm-text)]">
-          {out || "Çıktı burada."}
+        <pre className="mt-3 min-h-0 flex-1 overflow-auto rounded border border-[#2d2d2d] bg-[#0a0a0a] p-4 font-mono text-[12px] leading-relaxed text-[#cccccc]">
+          {out || "Çıktı burada. Görevleri ve komutları sol asistanla planlayın."}
         </pre>
       </div>
     </div>

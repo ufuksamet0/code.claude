@@ -30,49 +30,75 @@ export function TestPage() {
   }
 
   return (
-    <div className="p-6 md:p-8">
-      <header className="mb-6">
-        <h1 className="text-[28px] font-semibold tracking-tight text-[var(--mm-text)]">Test</h1>
-        <p className="mt-1 max-w-2xl text-[15px] leading-relaxed text-[var(--mm-muted)]">
-          Kod modu ile aynı proje kökünü kullanır. Önce projeyi seçin, ardından test komutunu
-          çalıştırın. GUI testleri (Playwright vb.) için komutu özelleştirin.
-        </p>
+    <div className="flex h-full min-h-0 flex-col overflow-hidden bg-[var(--mm-ws-bg)] text-[var(--mm-ws-fg)]">
+      <header
+        className="flex h-12 shrink-0 items-center justify-between border-b px-4"
+        style={{ borderColor: "var(--mm-chat-border)", background: "#1e293b" }}
+      >
+        <div>
+          <h1 className="text-[15px] font-semibold text-[#f1f5f9]">Test koşusu</h1>
+          <p className="text-[11px] text-[#94a3b8]">Kod modu ile aynı proje kökü</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="hidden rounded-full bg-[#34d399]/20 px-2 py-0.5 text-[10px] font-medium text-[#34d399] sm:inline">
+            CI hazır
+          </span>
+        </div>
       </header>
 
-      <div className="mb-4 flex flex-wrap items-center gap-2">
-        <button
-          type="button"
-          className="mm-focus mm-pill bg-[var(--mm-accent)] px-4 py-2 text-[13px] font-medium text-white"
-          onClick={() => void pickProject()}
+      <div className="flex min-h-0 flex-1 flex-col gap-4 p-4 md:flex-row md:gap-6">
+        <section
+          className="flex min-w-0 flex-1 flex-col rounded-lg border"
+          style={{ borderColor: "var(--mm-chat-border)", background: "#0f172a" }}
         >
-          Test edilecek proje
-        </button>
-        {root ? (
-          <span className="text-[13px] text-[var(--mm-muted)]">{root}</span>
-        ) : (
-          <span className="text-[13px] text-[var(--mm-muted)]">Proje seçilmedi</span>
-        )}
-      </div>
+          <div className="border-b border-[#334155] px-4 py-3">
+            <h2 className="text-[12px] font-semibold uppercase tracking-wide text-[#94a3b8]">
+              Proje
+            </h2>
+            <button
+              type="button"
+              className="mt-2 rounded-md bg-[#34d399] px-4 py-2 text-[13px] font-semibold text-[#0f172a] hover:brightness-110"
+              onClick={() => void pickProject()}
+            >
+              Test edilecek proje seç
+            </button>
+            <p className="mt-3 line-clamp-3 break-all font-mono text-[11px] text-[#64748b]">
+              {root ?? "Henüz kök seçilmedi."}
+            </p>
+          </div>
+          <div className="flex flex-1 flex-col p-4">
+            <label className="text-[12px] font-medium text-[#cbd5e1]">Komut (proje kökünde)</label>
+            <div className="mt-2 flex gap-2">
+              <input
+                className="mm-focus flex-1 rounded-md border border-[#334155] bg-[#1e293b] px-3 py-2.5 font-mono text-[13px] text-[#e2e8f0]"
+                value={cmd}
+                onChange={(e) => setCmd(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") void runTests();
+                }}
+              />
+              <button
+                type="button"
+                className="rounded-md bg-[#34d399] px-5 py-2 text-[13px] font-semibold text-[#0f172a] hover:brightness-110"
+                onClick={() => void runTests()}
+              >
+                Çalıştır
+              </button>
+            </div>
+          </div>
+        </section>
 
-      <div className="mm-glass rounded-[var(--mm-radius)] p-4">
-        <label className="text-[13px] text-[var(--mm-muted)]">Komut (proje kökünde)</label>
-        <div className="mt-2 flex gap-2">
-          <input
-            className="mm-focus flex-1 rounded-[var(--mm-radius-sm)] border border-[var(--mm-border)] bg-[var(--mm-surface-solid)] px-3 py-2 font-mono text-[13px]"
-            value={cmd}
-            onChange={(e) => setCmd(e.target.value)}
-          />
-          <button
-            type="button"
-            className="mm-focus mm-pill bg-[var(--mm-accent)] px-4 py-2 text-[13px] font-semibold text-white"
-            onClick={() => void runTests()}
-          >
-            Çalıştır
-          </button>
-        </div>
-        <pre className="mt-4 max-h-[min(50vh,480px)] overflow-auto rounded-[var(--mm-radius-sm)] bg-[var(--mm-chat)] p-3 font-mono text-[11px] text-[var(--mm-text)]">
-          {out || "Test çıktısı burada görünür."}
-        </pre>
+        <section
+          className="flex min-h-[200px] min-w-0 flex-[1.2] flex-col rounded-lg border"
+          style={{ borderColor: "var(--mm-chat-border)", background: "#0f172a" }}
+        >
+          <div className="border-b border-[#334155] px-4 py-2 text-[11px] font-semibold uppercase tracking-wide text-[#94a3b8]">
+            Çıktı
+          </div>
+          <pre className="min-h-0 flex-1 overflow-auto p-4 font-mono text-[11px] leading-relaxed text-[#cbd5e1]">
+            {out || "Test çıktısı burada. Playwright veya özel komutlar için asistandan yardım alın."}
+          </pre>
+        </section>
       </div>
     </div>
   );

@@ -11,27 +11,27 @@ const meta: Record<
 > = {
   code: {
     title: "Kod",
-    subtitle: "Proje dosyaları ve terminal",
+    subtitle: "IDE: proje, editör ve terminal — komutlar sohbetten",
   },
   video: {
     title: "Video",
-    subtitle: "Düzenleme ve üretim",
+    subtitle: "Kurgu zaman çizelgesi — plan ve komutlar sohbetten",
   },
   photo: {
     title: "Fotoğraf",
-    subtitle: "Düzenleme ve üretim",
+    subtitle: "Kompozisyon ve üretim — yönlendirme sohbetten",
   },
   agents: {
     title: "Ajanlar",
-    subtitle: "Günlük işler ve GUI",
+    subtitle: "Otomasyon ve GUI — betik ve adımlar sohbetten",
   },
   pc: {
     title: "PC",
-    subtitle: "Terminal odaklı görevler",
+    subtitle: "Sistem kabuğu — görevler sohbetten",
   },
   test: {
     title: "Test",
-    subtitle: "Terminal ve GUI testleri",
+    subtitle: "Kalite ve CI — komutlar sohbetten",
   },
 };
 
@@ -42,10 +42,13 @@ export function AppShell() {
   const m = meta[mode];
 
   return (
-    <div className="flex h-screen min-h-0 flex-col bg-[var(--mm-bg)]">
+    <div
+      className="mm-app-shell flex h-screen min-h-0 flex-col"
+      data-mm-mode={mode}
+    >
       <div className="flex min-h-0 flex-1">
         <ChatPanel mode={mode} title={m.title} subtitle={m.subtitle} />
-        <main className="min-h-0 min-w-0 flex-1 overflow-auto">
+        <main className="mm-workspace-main min-h-0 min-w-0 flex-1 overflow-hidden">
           <Outlet />
         </main>
       </div>

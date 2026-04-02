@@ -71,3 +71,184 @@ body {
   outline: 2px solid var(--mm-accent);
   outline-offset: 2px;
 }
+
+/* --- Mod bazlı kabuk: sol sohbet + çalışma alanı --- */
+.mm-app-shell {
+  background: var(--mm-shell-bg, var(--mm-bg));
+  color: var(--mm-shell-fg, var(--mm-text));
+}
+
+.mm-workspace-main {
+  background: var(--mm-ws-bg, var(--mm-bg));
+  color: var(--mm-ws-fg, var(--mm-text));
+}
+
+.mm-chat-panel {
+  background: var(--mm-chat-panel-bg, var(--mm-surface));
+  border-color: var(--mm-chat-border, var(--mm-border)) !important;
+  border-right-width: 1px;
+  border-right-style: solid;
+  color: var(--mm-chat-text, var(--mm-text));
+  backdrop-filter: var(--mm-blur);
+  -webkit-backdrop-filter: var(--mm-blur);
+}
+
+.mm-chat-panel-header,
+.mm-chat-panel-footer {
+  border-color: var(--mm-chat-border, var(--mm-border));
+}
+
+.mm-chat-scroll {
+  background: var(--mm-chat-scroll-bg, var(--mm-chat));
+}
+
+.mm-chat-bubble-user {
+  background: var(--mm-chat-user-bg, var(--mm-accent-soft));
+  color: var(--mm-chat-text, var(--mm-text));
+}
+
+.mm-chat-bubble-assistant {
+  border-color: var(--mm-chat-border, var(--mm-border));
+  background: var(--mm-chat-assistant-bg, var(--mm-surface-solid));
+  color: var(--mm-chat-text, var(--mm-text));
+}
+
+.mm-chat-memory-preview {
+  background: color-mix(in srgb, var(--mm-chat-scroll-bg, var(--mm-chat)) 85%, transparent);
+}
+
+.mm-chat-send {
+  background: var(--mm-chat-accent, var(--mm-accent));
+  color: #fff;
+}
+
+.mm-bottom-nav {
+  border-color: var(--mm-nav-border, var(--mm-border));
+  background: var(--mm-nav-bg, var(--mm-nav));
+}
+
+/* Kod — VS Code benzeri */
+.mm-app-shell[data-mm-mode="code"] {
+  --mm-accent: #3794ff;
+  --mm-accent-soft: rgba(55, 148, 255, 0.2);
+  --mm-shell-bg: #1e1e1e;
+  --mm-shell-fg: #cccccc;
+  --mm-ws-bg: #1e1e1e;
+  --mm-ws-fg: #cccccc;
+  --mm-chat-panel-bg: #252526;
+  --mm-chat-border: #3c3c3c;
+  --mm-chat-text: #cccccc;
+  --mm-chat-muted: #858585;
+  --mm-chat-accent: #3794ff;
+  --mm-chat-input-bg: #3c3c3c;
+  --mm-chat-scroll-bg: #1e1e1e;
+  --mm-chat-user-bg: rgba(0, 122, 204, 0.25);
+  --mm-chat-assistant-bg: #2d2d2d;
+  --mm-nav-border: #3c3c3c;
+  --mm-nav-bg: #252526;
+}
+
+/* Video — Premiere benzeri */
+.mm-app-shell[data-mm-mode="video"] {
+  --mm-accent: #63e6be;
+  --mm-accent-soft: rgba(99, 230, 190, 0.15);
+  --mm-shell-bg: #0d0d0d;
+  --mm-shell-fg: #c8c8c8;
+  --mm-ws-bg: #121212;
+  --mm-ws-fg: #d4d4d4;
+  --mm-chat-panel-bg: #1a1a1a;
+  --mm-chat-border: #333333;
+  --mm-chat-text: #e0e0e0;
+  --mm-chat-muted: #8a8a8a;
+  --mm-chat-accent: #63e6be;
+  --mm-chat-input-bg: #262626;
+  --mm-chat-scroll-bg: #141414;
+  --mm-chat-user-bg: rgba(99, 230, 190, 0.15);
+  --mm-chat-assistant-bg: #1f1f1f;
+  --mm-nav-border: #2a2a2a;
+  --mm-nav-bg: #161616;
+}
+
+/* Foto — Photoshop benzeri */
+.mm-app-shell[data-mm-mode="photo"] {
+  --mm-accent: #31a8ff;
+  --mm-accent-soft: rgba(49, 168, 255, 0.18);
+  --mm-shell-bg: #2b2b2b;
+  --mm-shell-fg: #d0d0d0;
+  --mm-ws-bg: #323232;
+  --mm-ws-fg: #e8e8e8;
+  --mm-chat-panel-bg: #383838;
+  --mm-chat-border: #4a4a4a;
+  --mm-chat-text: #ececec;
+  --mm-chat-muted: #a3a3a3;
+  --mm-chat-accent: #31a8ff;
+  --mm-chat-input-bg: #434343;
+  --mm-chat-scroll-bg: #2e2e2e;
+  --mm-chat-user-bg: rgba(49, 168, 255, 0.18);
+  --mm-chat-assistant-bg: #3e3e3e;
+  --mm-nav-border: #484848;
+  --mm-nav-bg: #353535;
+}
+
+/* Ajanlar — otomasyon stüdyosu */
+.mm-app-shell[data-mm-mode="agents"] {
+  --mm-accent: #58a6ff;
+  --mm-accent-soft: rgba(88, 166, 255, 0.18);
+  --mm-shell-bg: #0f1419;
+  --mm-shell-fg: #e6edf3;
+  --mm-ws-bg: #131920;
+  --mm-ws-fg: #e6edf3;
+  --mm-chat-panel-bg: #1a2332;
+  --mm-chat-border: #30363d;
+  --mm-chat-text: #e6edf3;
+  --mm-chat-muted: #8b949e;
+  --mm-chat-accent: #58a6ff;
+  --mm-chat-input-bg: #21262d;
+  --mm-chat-scroll-bg: #0d1117;
+  --mm-chat-user-bg: rgba(88, 166, 255, 0.15);
+  --mm-chat-assistant-bg: #161b22;
+  --mm-nav-border: #30363d;
+  --mm-nav-bg: #161b22;
+}
+
+/* PC — terminal konsolu */
+.mm-app-shell[data-mm-mode="pc"] {
+  --mm-accent: #3ecf8e;
+  --mm-accent-soft: rgba(62, 207, 142, 0.15);
+  --mm-shell-bg: #0c0c0c;
+  --mm-shell-fg: #cccccc;
+  --mm-ws-bg: #0c0c0c;
+  --mm-ws-fg: #00ff9d;
+  --mm-chat-panel-bg: #141414;
+  --mm-chat-border: #2d2d2d;
+  --mm-chat-text: #e0e0e0;
+  --mm-chat-muted: #6e6e6e;
+  --mm-chat-accent: #3ecf8e;
+  --mm-chat-input-bg: #1e1e1e;
+  --mm-chat-scroll-bg: #0a0a0a;
+  --mm-chat-user-bg: rgba(62, 207, 142, 0.12);
+  --mm-chat-assistant-bg: #1a1a1a;
+  --mm-nav-border: #262626;
+  --mm-nav-bg: #111111;
+}
+
+/* Test — CI / rapor */
+.mm-app-shell[data-mm-mode="test"] {
+  --mm-accent: #34d399;
+  --mm-accent-soft: rgba(52, 211, 153, 0.15);
+  --mm-shell-bg: #111827;
+  --mm-shell-fg: #f3f4f6;
+  --mm-ws-bg: #0f172a;
+  --mm-ws-fg: #e5e7eb;
+  --mm-chat-panel-bg: #1e293b;
+  --mm-chat-border: #334155;
+  --mm-chat-text: #f1f5f9;
+  --mm-chat-muted: #94a3b8;
+  --mm-chat-accent: #34d399;
+  --mm-chat-input-bg: #334155;
+  --mm-chat-scroll-bg: #0f172a;
+  --mm-chat-user-bg: rgba(52, 211, 153, 0.12);
+  --mm-chat-assistant-bg: #1e293b;
+  --mm-nav-border: #334155;
+  --mm-nav-bg: #1e293b;
+}

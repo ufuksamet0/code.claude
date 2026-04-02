@@ -7,4 +7,17 @@ export type ChatMessage = {
   content: string;
 };
 
-export type ProviderId = "openai" | "anthropic" | "ollama";
+export type ProviderId =
+  | "openai"
+  | "anthropic"
+  | "ollama"
+  | "google"
+  | "groq"
+  | "mistral"
+  | "openrouter"
+  | "together"
+  | "xai"
+  | "deepseek"
+  | "perplexity"
+  | "llama"
+  | "qwen";
