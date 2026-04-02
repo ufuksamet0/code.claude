@@ -1,0 +1,15 @@
+{
+  "version": "0.1.1",
+  "notes": "Örnek sürüm notları",
+  "pub_date": "2026-04-02T12:00:00Z",
+  "platforms": {
+    "darwin-aarch64": {
+      "signature": "BURAYA_MultiMod_AI.app.tar.gz.sig_DOSYASININ_ICERIGI",
+      "url": "https://github.com/KULLANICI/REPO/releases/download/v0.1.1/MultiMod%20AI.app.tar.gz"
+    },
+    "darwin-x86_64": {
+      "signature": "BURAYA_IMZA",
+      "url": "https://github.com/KULLANICI/REPO/releases/download/v0.1.1/MultiMod%20AI.app.tar.gz"
+    }
+  }
+}
