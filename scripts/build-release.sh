@@ -5,7 +5,9 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
 export TAURI_SIGNING_PRIVATE_KEY="$(cat src-tauri/updater.key)"
-export TAURI_SIGNING_PRIVATE_KEY_PASSWORD=""
+# Parolalı updater.key için DERİN: önce terminalde şunu verin (tırnak içinde):
+#   export TAURI_SIGNING_PRIVATE_KEY_PASSWORD='anahtar_parolanız'
+# Boş bırakırsanız Tauri şifre sorar; CI için GitHub Secret aynı ada sahip olmalı.
 unset CI
 
 npm run tauri build

@@ -16,7 +16,13 @@ Bu repoda `.github/workflows/release.yml` tanımlıdır. Sizin yapmanız gereken
    - GitHub → Repository → Settings → Secrets and variables → Actions → New repository secret:
      Ad: TAURI_SIGNING_PRIVATE_KEY
      Değer: `src-tauri/updater.key` dosyasının TAM içeriği (satır sonları dahil).
-   - Anahtar parolalıysa: TAURI_SIGNING_PRIVATE_KEY_PASSWORD secret’ı ekleyin.
+   - Anahtar parolalıysa: TAURI_SIGNING_PRIVATE_KEY_PASSWORD secret’ı ekleyin (GitHub’da aynı parola).
+
+Yerelde `npm run tauri build` / `bash scripts/build-release.sh` kullanırken parolalı anahtar hatası alırsanız:
+   export TAURI_SIGNING_PRIVATE_KEY="$(cat src-tauri/updater.key)"
+   export TAURI_SIGNING_PRIVATE_KEY_PASSWORD='parolanız'
+   npm run tauri build
+(build-release.sh artık parolayı sıfırlamaz; ortam değişkeni kullanılır.)
 
 2) Repo → Settings → Actions → General → Workflow permissions: “Read and write permissions” açın.
 
